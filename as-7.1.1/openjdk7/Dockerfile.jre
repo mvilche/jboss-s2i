@@ -1,6 +1,7 @@
 FROM alpine:3.10
 
-ENV JDK_VERSION=openjdk7-jre
+ENV JDK_VERSION=openjdk7-jre \
+JBOSS_HOME=/opt/jboss
 
 LABEL autor="Martin Vilche <mfvilche@gmail.com>" \
       io.k8s.description="Runtime image jdk alpine" \
