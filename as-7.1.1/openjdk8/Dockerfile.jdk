@@ -1,7 +1,8 @@
 FROM alpine:3.10
 
 ENV MAVEN_VERSION=3.6.1 \
-JDK_VERSION=openjdk8
+JDK_VERSION=openjdk8 \
+JBOSS_HOME=/opt/jboss
 
 LABEL autor="Martin Vilche <mfvilche@gmail.com>" \
       io.k8s.description="Compilador de aplicaciones java con maven s2i" \
@@ -21,6 +22,7 @@ ln -s /opt/maven/apache-maven-${MAVEN_VERSION}/bin/mvn /usr/bin/mvn && \
 wget https://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.tar.gz --progress=bar:force -O /tmp/jboss.tar.gz && \
 tar zxvf /tmp/jboss.tar.gz -C /opt/jboss --strip-components 1 && rm -rf /tmp/jboss.tar.gz && \
 rm -rf /opt/jboss/jboss-modules.jar
+COPY contrib/jboss-modules.jar /opt/jboss/jboss-modules.jar
 COPY contrib/wfmodules/ /opt/jboss/modules/
 COPY contrib/wfmodules/biz /opt/jboss/modules/system/layers/base/biz
 COPY contrib/wfcfg/standalone.xml /opt/jboss/standalone/configuration/custom/standalone.xml
