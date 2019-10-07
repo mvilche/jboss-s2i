@@ -199,6 +199,7 @@
               name: jboss-${jboss_VERSION}-runtime:latest
           type: Docker
         triggers:
+          - type: ConfigChange
           - imageChange:
               from:
                 kind: "ImageStreamTag"

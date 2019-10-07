@@ -14,7 +14,9 @@ RUN apk add --update --no-cache $JDK_VERSION wget bash tzdata msttcorefonts-inst
     update-ms-fonts && \
     fc-cache -f && \
 wget https://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.tar.gz --progress=bar:force -O /tmp/jboss.tar.gz && \
-mkdir -p /opt/jboss /opt/config && tar zxvf /tmp/jboss.tar.gz -C /opt/jboss --strip-components 1 && rm -rf /tmp/jboss.tar.gz
+mkdir -p /opt/jboss /opt/config && tar zxvf /tmp/jboss.tar.gz -C /opt/jboss --strip-components 1 && rm -rf /tmp/jboss.tar.gz && \
+rm -rf /opt/jboss/jboss-modules.jar
+COPY contrib/jboss-modules.jar /opt/jboss/jboss-modules.jar
 COPY contrib/wfmodules/ /opt/jboss/modules/
 COPY contrib/wfmodules/biz /opt/jboss/modules/system/layers/base/biz
 COPY contrib/wfcfg/standalone.xml /opt/jboss/standalone/configuration/custom/standalone.xml
