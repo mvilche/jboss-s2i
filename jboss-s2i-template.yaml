@@ -157,6 +157,10 @@
       successfulBuildsHistoryLimit: 5
       triggers:
         - type: ConfigChange
+        imageChange:
+          from:
+            kind: "ImageStreamTag"
+            name: "${APP_NAME}-s2i:latest"        
 
 
 
@@ -199,7 +203,7 @@
         imageChange:
           from:
             kind: "ImageStreamTag"
-            name: "${APP_NAME}-s2i:latest"
+            name: "jboss-${jboss_VERSION}-s2i:latest"
 
 
 
