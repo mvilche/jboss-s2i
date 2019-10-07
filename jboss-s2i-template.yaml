@@ -158,9 +158,9 @@
         triggers:
           - type: ConfigChange
           - imageChange:
-            from:
-              kind: "ImageStreamTag"
-              name: "${APP_NAME}-s2i:latest"        
+              from:
+                kind: "ImageStreamTag"
+                name: "jboss-${jboss_VERSION}-s2i:latest"        
 
 
 
@@ -199,11 +199,10 @@
               name: jboss-${jboss_VERSION}-runtime:latest
           type: Docker
         triggers:
-        - type: "imageChange"
-        - imageChange:
-            from:
-              kind: "ImageStreamTag"
-              name: "jboss-${jboss_VERSION}-s2i:latest"
+          - imageChange:
+              from:
+                kind: "ImageStreamTag"
+                name: "${APP_NAME}-s2i:latest"   
 
 
 

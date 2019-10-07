@@ -1,0 +1,32 @@
+FROM alpine:3.10
+
+ENV JDK_VERSION=openjdk7-jre
+
+LABEL autor="Martin Vilche <mfvilche@gmail.com>" \
+      io.k8s.description="Runtime image jdk alpine" \
+      io.k8s.display-name="Java Applications" \
+      io.openshift.tags="builder,java,maven,runtime" \
+      io.openshift.expose-services="8080,8009,8778" \
+      io.openshift.s2i.scripts-url="image:///usr/libexec/s2i" \
+      org.jboss.deployments-dir="/opt/jboss/standalone/deployments"
+
+RUN apk add --update --no-cache $JDK_VERSION wget bash tzdata msttcorefonts-installer fontconfig && \
+    update-ms-fonts && \
+    fc-cache -f && \
+wget https://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.tar.gz --progress=bar:force -O /tmp/jboss.tar.gz && \
+mkdir -p /opt/jboss /opt/config && tar zxvf /tmp/jboss.tar.gz -C /opt/jboss --strip-components 1 && rm -rf /tmp/jboss.tar.gz
+COPY contrib/wfmodules/ /opt/jboss/modules/
+COPY contrib/wfmodules/biz /opt/jboss/modules/system/layers/base/biz
+COPY contrib/wfcfg/standalone.xml /opt/jboss/standalone/configuration/custom/standalone.xml
+COPY contrib/wfcfg/standalone.conf /opt/jboss/bin/standalone.conf
+COPY s2i/bin/run /usr/libexec/s2i/run
+COPY contrib/jolokia-jvm-1.6.2-agent.jar /usr/libexec/s2i/jolokia-jvm-1.6.2-agent.jar
+RUN touch /etc/localtime /etc/timezone && \
+chown -R 1001 /opt /usr/libexec/s2i /etc/localtime /etc/timezone  && \
+chgrp -R 0 /opt /usr/libexec/s2i /etc/localtime /etc/timezone  && \
+chmod -R g=u /opt /usr/libexec/s2i /etc/localtime /etc/timezone
+WORKDIR /opt/jboss
+USER 1001
+EXPOSE 8080 8778 8009
+CMD ["/usr/libexec/s2i/run"]
+
