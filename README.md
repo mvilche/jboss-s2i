@@ -1,4 +1,4 @@
-# Wildfly s2i images 
+# jboss s2i images 
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
@@ -25,7 +25,7 @@
 
 ### Openshift Install
 
-oc create -f wildfly-s2i-template.yaml
+oc create -f jboss-s2i-template.yaml
 
 License
 ----
