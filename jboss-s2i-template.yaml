@@ -200,7 +200,7 @@
         type: Docker
       triggers:
       - type: "imageChange"
-        imageChange:
+      - imageChange:
           from:
             kind: "ImageStreamTag"
             name: "jboss-${jboss_VERSION}-s2i:latest"
