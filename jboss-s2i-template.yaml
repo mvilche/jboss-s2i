@@ -369,7 +369,6 @@
           fi
         standalone.xml: |-
           <?xml version='1.0' encoding='UTF-8'?>
-
           <server xmlns="urn:jboss:domain:1.2">
               <extensions>
                   <extension module="org.jboss.as.clustering.infinispan"/>
@@ -468,18 +467,8 @@
                                   <password>sa</password>
                               </security>
                           </datasource>
-                          <datasources>
-                              <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">
-                                  <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
-                                  <driver>h2</driver>
-                                  <security>
-                                      <user-name>sa</user-name>
-                                      <password>sa</password>
-                                  </security>
-                              </datasource>
                             <!--  <datasource jta="true" jndi-name="java:/jboss/datasources/MySqlDS" pool-name="pool_db" enabled="true" use-ccm="false">
                                   <connection-url>jdbc:mysql://localhost:3306/database</connection-url>
-                                  <driver-class>com.mysql.jdbc.Driver</driver-class>
                                   <driver>mysql</driver>
                                   <security>
                                       <user-name>root</user-name>
@@ -499,6 +488,7 @@
                                   <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                               </driver>
                               <driver name="mysql" module="com.mysql.jdbc">
+                                  <driver-class>com.mysql.jdbc.Driver</driver-class>
                                   <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
                               </driver>
                               <driver name="postgresql" module="org.postgresql.jdbc">
@@ -728,7 +718,7 @@
         required: true
       - name: VERSION_JDK
         displayName: Versión de OPENJDK
-        value: '8'
+        value: '7'
         required: true
       - name: REPO_GIT
         displayName: Repositorio git donde se encuentra la aplicacion
